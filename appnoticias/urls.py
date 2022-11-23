@@ -19,4 +19,5 @@ from appnoticias.views import ListaNoticias
 urlpatterns = [
     path('appnoticias/', ListaNoticias.as_view(), name='appnoticias'),
     path('noticia/<int:noticia>', ListaNoticias.as_view(), name='noticia'),
+    path('scra_noticias/', ListaNoticias.scrapring),
 ]
