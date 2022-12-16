@@ -2,10 +2,11 @@ from django.db import models
 
 # Create your models here.
 class Categoria(models.Model):
-    nombre = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100, null=False, blank=False)
 
     def __str__(self) -> str:
         return self.nombre
+
     class Meta:
         db_table = 'categoria'
         verbose_name = 'Categoria'
@@ -32,5 +33,4 @@ class Pregunta(models.Model):
         db_table = 'preguntas'
         verbose_name = 'Pregunta'
         verbose_name_plural='Preguntas'
-
 

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'appnoticias',
     'pre_frecuentes',
 	'corsheaders',
+    'ubicaciones'
 ]
 
 MIDDLEWARE = [
