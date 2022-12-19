@@ -11,13 +11,26 @@ admin.site.register(SedeRaparticion, SedeReparticionAdmin)
 
 
 
-class UsoAdmin(admin.ModelAdmin):
- def has_module_permission(self, request):
-        return False
-admin.site.register(Uso, UsoAdmin)
-
 
 admin.site.register(Sede)
+
+
+class DiasHorasInline(admin.TabularInline):
+    model = DiasHora
+    extra = 1
+    autocomplete_fields = ['diasemamna']
+
+
+class DiaSemanaAdmin(admin.ModelAdmin):
+    inlines = (DiasHorasInline,)
+    search_fields = ('nombre'),
+    ordering = ['nombre']
+    
+    def has_module_permission(self, request):
+        return False
+    
+admin.site.register(DiaSemana, DiaSemanaAdmin)
+
 
 class ReparticionAdmin(admin.ModelAdmin):
  def has_module_permission(self, request):
@@ -40,5 +53,15 @@ class ContactoAdmin(admin.ModelAdmin):
 admin.site.register(Contacto, ContactoAdmin)
 
 class ReparticionEspacioAdmin(admin.ModelAdmin):
-    list_display = ('reparticion_sede', 'espacio', 'contacto', 'uso', 'servicio')
+    inlines = [DiasHorasInline,]
+    list_display = ('reparticion_sede', 'espacio', 'servicio', 'contacto')
+    
+    fieldsets = (
+        (None, {
+            'fields': ('reparticion_sede', 'espacio')
+        }),
+        ('Servicios y Contacto', {
+            'fields': ('servicio', 'contacto')
+        }),
+    )
 admin.site.register(ReparticionEspacio, ReparticionEspacioAdmin)

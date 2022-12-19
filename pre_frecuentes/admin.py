@@ -7,8 +7,5 @@ class PersonalizarPreguntas(admin.ModelAdmin):
 
     list_display = ('titulo', 'respuesta', 'categoria')
 
-
-
-
 admin.site.register(Pregunta, PersonalizarPreguntas)
 admin.site.register(Categoria)
