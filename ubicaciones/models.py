@@ -17,6 +17,7 @@ class Sede(models.Model):
 class Reparticion(models.Model):
     nombre = models.CharField(max_length=100, null=False, blank=False)
     direccion = models.TextField(null=True, blank=False )
+    ciudad  = models.CharField(max_length=100)
 
     class Meta:
         db_table = 'reparticion'
@@ -54,16 +55,7 @@ class Servicio(models.Model):
     def __str__(self):
         return self.nombre
 
-class Ciudad(models.Model):
-    nombre = models.CharField(max_length=100, null=True, blank=True)
 
-    class Meta:
-        db_table = 'ciudad'
-        verbose_name = 'Ciudad'
-        verbose_name_plural ='Ciudades'
-
-    def __str__(self):
-        return self.nombre
 
 class Contacto(models.Model):
     fonos = models.CharField(max_length=100, null=True, blank=True)
@@ -97,7 +89,6 @@ class DiaSemana(models.Model):
 class SedeRaparticion(models.Model):
     sede = models.ForeignKey(Sede, models.CASCADE, null=True)
     reparticion = models.ForeignKey(Reparticion, models.CASCADE, null=True)
-    ciudad = models.ForeignKey(Ciudad, models.CASCADE, null=True)
     espacio = models.ForeignKey(Espacio, models.CASCADE, null=True)
     servicio = models.ForeignKey(Servicio, models.CASCADE, null=True)
     contacto = models.ForeignKey(Contacto, models.CASCADE, null=True)

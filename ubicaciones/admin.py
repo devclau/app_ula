@@ -20,7 +20,6 @@ admin.site.register(DiaSemana, DiaSemanaAdmin)
 
 
 admin.site.register(Reparticion)
-admin.site.register(Ciudad)
 admin.site.register(Espacio)
 admin.site.register(Servicio)
 admin.site.register(Contacto)
