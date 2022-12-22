@@ -32,7 +32,7 @@ class SedeReparticionAdmin(admin.ModelAdmin):
     
     fieldsets = (
         (None, {
-            'fields': ('sede', 'reparticion', 'espacio')
+            'fields': ('sede', 'reparticion','ciudad', 'espacio')
         }),
         ('Servicios y Contacto', {
             'fields': ('servicio', 'contacto')
