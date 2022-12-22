@@ -27,11 +27,11 @@ admin.site.register(Contacto)
 
 class SedeReparticionAdmin(admin.ModelAdmin):
     inlines = [DiasHorasInline,]
-    list_display = ('sede', 'reparticion','ciudad','espacio', 'servicio', 'contacto')
+    list_display = ('sede', 'reparticion','espacio', 'servicio', 'contacto')
     
     fieldsets = (
         (None, {
-            'fields': ('sede', 'reparticion','ciudad', 'espacio')
+            'fields': ('sede', 'reparticion', 'espacio')
         }),
         ('Servicios y Contacto', {
             'fields': ('servicio', 'contacto')
