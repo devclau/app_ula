@@ -8,6 +8,8 @@ class Sede(models.Model):
     def __str__(self)-> str:
         return self.nombre
 
+   
+    
     class Meta:
         db_table = 'sede'
         verbose_name='Sede'
@@ -26,12 +28,19 @@ class Reparticion(models.Model):
     def __str__(self) -> str:
         return self.nombre
 
+#TABLA PIVOTE SEDE-REPARTICIONES 
 
+class SedeRaparticion(models.Model):
+    sede = models.ForeignKey(Sede, models.DO_NOTHING, null=False)
+    reparticion = models.ForeignKey(Reparticion, models.DO_NOTHING, null=False)
+    
+    def __str__(self):
+        return f"{self.sede} - {self.reparticion}"
 
 class Espacio(models.Model):
     nombre = models.CharField(max_length=100, null=False, blank=False)
-    imagen = models.CharField(max_length=200, null=True, blank=True,help_text='Imagen URL')
-    coordenadas = models.CharField(max_length=250, null=False, blank=False, help_text='Coordenadas (Longitud , Latitud)')
+    imagen = models.CharField(max_length=200, null=True, blank=True,verbose_name='Imagen URL')
+    coordenadas = models.CharField(max_length=250, null=False, blank=False, verbose_name='Coordenadas (Longitud , Latitud)')
     uso = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
@@ -54,16 +63,6 @@ class Servicio(models.Model):
     def __str__(self):
         return self.nombre
 
-class Ciudad(models.Model):
-    nombre = models.CharField(max_length=100, null=True, blank=True)
-
-    class Meta:
-        db_table = 'ciudad'
-        verbose_name = 'Ciudad'
-        verbose_name_plural ='Ciudades'
-
-    def __str__(self):
-        return self.nombre
 
 class Contacto(models.Model):
     fonos = models.CharField(max_length=100, null=True, blank=True)
@@ -71,7 +70,7 @@ class Contacto(models.Model):
     email = models.CharField(max_length=100, null=True, blank=True)
     otro = models.TextField()
     horarios =  models.CharField(max_length=100, null=True, blank=True)
-    personas= models.TextField(help_text='Personas (nombre,cargo, email,fonos)')
+    personas= models.TextField(verbose_name='Personas (nombre,cargo, email,fonos)')
     
 
     def __str__(self):
@@ -88,27 +87,22 @@ class DiaSemana(models.Model):
     def __str__(self):
         return self.nombre
 
-
-
-
-
-#TABLA PIVOTE SEDE-REPARTICIONES #### TABLA PRINCIPAL
-
-class SedeRaparticion(models.Model):
-    sede = models.ForeignKey(Sede, models.CASCADE, null=True)
-    reparticion = models.ForeignKey(Reparticion, models.CASCADE, null=True)
-    ciudad = models.ForeignKey(Ciudad, models.CASCADE, null=True)
-    espacio = models.ForeignKey(Espacio, models.CASCADE, null=True)
-    servicio = models.ForeignKey(Servicio, models.CASCADE, null=True)
-    contacto = models.ForeignKey(Contacto, models.CASCADE, null=True)
-    diahoras = models.ManyToManyField(DiaSemana,through='DiasHora', blank=True,)
-    def __str__(self):
-        return f"{self.sede} - {self.reparticion}"
-
-    class Meta:
-        verbose_name = "Formulario de Ingreso"
-
 ############################################################################################
+    
+
+
+
+#TABLA PIVOTE REPARTICION - ESPACIO 
+class ReparticionEspacio(models.Model):
+    reparticion_sede = models.ForeignKey(SedeRaparticion, models.DO_NOTHING, null=True)
+    espacio = models.ForeignKey(Espacio, models.DO_NOTHING, null=True)
+    contacto = models.ForeignKey(Contacto, models.DO_NOTHING, null=True)
+    servicio = models.ForeignKey(Servicio, models.DO_NOTHING, null=True)
+    diahoras = models.ManyToManyField(DiaSemana,through='DiasHora', blank=True,)
+
+    def __str__(self):
+        return f"{self.reparticion_sede} - {self.espacio}"
+
 
 class DiasHora(models.Model):
     
@@ -119,7 +113,7 @@ class DiasHora(models.Model):
         blank=True, null=True
     )
     reparticionEspacio = models.ForeignKey(
-        SedeRaparticion, 
+        ReparticionEspacio, 
         on_delete=models.CASCADE,
         blank=True, null=True
     )
