@@ -16,6 +16,7 @@ Class-based views
 from django.urls import path
 from appnoticias.views import ListaNoticias
 
+
 urlpatterns = [
     path('appnoticias/', ListaNoticias.as_view(), name='appnoticias'),
     path('noticia/<int:noticia>', ListaNoticias.as_view(), name='noticia'),
