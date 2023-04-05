@@ -63,7 +63,7 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 SILENCED_SYSTEM_CHECKS = ["security.W019"]
 ############djando-admin-interface######################
 
-ROOT_URLCONF = 'noticias.urls'
+ROOT_URLCONF = 'cors.urls'
 
 TEMPLATES = [
     {
@@ -81,7 +81,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'noticias.wsgi.application'
+WSGI_APPLICATION = 'cors.wsgi.application'
 
 
 # Database
