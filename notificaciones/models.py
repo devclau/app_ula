@@ -7,6 +7,11 @@ class Notificacion(models.Model):
     link = models.URLField(verbose_name="URL")
     title = models.CharField(max_length=200,verbose_name="Titulo")
     detail = models.TextField(verbose_name="Mensaje")
+    
 
     def __str__(self):
         return self.title
+    class Meta:
+        db_table = 'notificaciones_notificacion'
+        verbose_name = 'notificacion'
+        verbose_name_plural='Notificaciones'

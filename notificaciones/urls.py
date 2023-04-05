@@ -16,6 +16,7 @@ Class-based views
 from django.urls import path, include
 from notificaciones.views import ListaNotificacion, ListaNotificacionDia
 
+
 urlpatterns = [
     path('notificaciones/',ListaNotificacion.as_view(), name='notificaciones'),
     path('notificaciones/dia',ListaNotificacionDia.as_view(), name='dia'),
