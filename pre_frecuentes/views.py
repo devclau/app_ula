@@ -9,7 +9,9 @@ class ListaFrecuentes(View):
     def get(self, request, *args, **kwargs):
         p=[]
         preguntas = Pregunta.objects.all()
+        
         for i in preguntas:
-            p.append({'id':i.id, 'titulo': i.titulo, 'respuesta':i.respuesta} )
+            categoria_dict = i.categoria.to_dict()
+            p.append({'id':i.id, 'titulo': i.titulo, 'respuesta':i.respuesta, 'categoria':categoria_dict} )
         return JsonResponse(p, safe=False)
         

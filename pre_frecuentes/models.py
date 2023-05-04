@@ -6,7 +6,10 @@ class Categoria(models.Model):
 
     def __str__(self) -> str:
         return self.nombre
-
+    
+    def to_dict(self):
+        return {'id': self.id, 'nombre': self.nombre}
+    
     class Meta:
         db_table = 'categoria'
         verbose_name = 'Categoria'
@@ -16,7 +19,7 @@ class Categoria(models.Model):
 class Pregunta(models.Model):
     titulo = models.CharField(max_length=100, blank=True, null=True)
     respuesta = models.TextField()
-    categoria = models.ForeignKey(Categoria,  models.DO_NOTHING, null=True)
+    categoria = models.ForeignKey(Categoria, models.CASCADE, null=True)
     
     
     def __str__(self) -> str:
@@ -26,7 +29,8 @@ class Pregunta(models.Model):
         return {
             
             'titulo': self.titulo,
-            'respuesta':self.respuesta
+            'respuesta':self.respuesta,
+            'categoria':self.categoria
         }
 
     class Meta:

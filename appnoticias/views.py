@@ -17,7 +17,7 @@ class ListaNoticias(View):
             datos = json.loads(pagina.content)
             
             for i  in datos:
-                dato = {"id": i['id'], 'titulo' : i['title'], 'resumen': i['excerpt']} 
+                dato = {"id": i['id'], 'titulo' : i['title'], 'resumen': i['excerpt'], 'categories': i['categories']} 
                 lista.append(dato)
         else: 
             url = 'https://www.ulagos.cl/wp-json/wp/v2/posts/'+ str(noticia)
