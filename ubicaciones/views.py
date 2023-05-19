@@ -103,7 +103,7 @@ class ListaUbicaciones(View):
                 cursor.execute(f"select d.id_sede, s.nom_sede, e.id_espc, e.nom_espc, e.id_nivel, d.longitud, d.latitud from ubicaciones_espacio e, ubicaciones_dependencia d, view_usabilidad u, view_sede s where e.id_dep=d.id_dep and e.id_usab=u.id_usab and d.id_sede=s.id_sede and u.id_usab={id_usab} and d.id_sede={id_sede} order by d.id_sede, e.nom_espc")
                 row = cursor.fetchall()
                 for i in row:
-                    lista.append({'id_sede':i[0], 'nom_sede': i[1], 'nom_espc':i[2], 'id_nivel':i[3], 'longitud':i[4],'latitud':i[5] } )
+                    lista.append({'id_sede':i[0], 'nom_sede': i[1], 'id_espc':i[2] ,'nom_espc':i[3], 'id_nivel':i[4], 'longitud':i[5],'latitud':i[6] } )
             
             elif "id_usua" in jd:
                 id_sede = jd['id_sede']
