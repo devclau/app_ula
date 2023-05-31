@@ -78,7 +78,7 @@ class ListaUbicaciones(View):
             elif "id_ciud" in jd:
                 id_sede =jd["id_sede"]
                 id_ciud = jd['id_ciud']
-                cursor.execute(f"select d.id_sede, s.nom_sede, c.id_ciud, c.nom_ciud, i.id_dire, i.nom_dire, d.longitud, d.latitud from ubicaciones_dependencia d, view_sede s, view_ciudad c, view_direccion i where d.id_sede= {id_sede} and d.id_ciud={id_ciud} and d.id_dire=i.id_dire and d.id_acceso=1 order by d.id_sede, c.nom_ciud, i.nom_dire")
+                cursor.execute(f"select d.id_sede, s.nom_sede, c.id_ciud, c.nom_ciud, i.id_dire, i.nom_dire, d.longitud, d.latitud from view_sede s, view_ciudad c, view_direccion i Inner JOIN ubicaciones_dependencia d on d.id_sede = s.id_sede AND (d.id_ciud = c.id_ciud) where d.id_sede= {id_sede} and d.id_ciud={id_ciud} and d.id_dire=i.id_dire and d.id_acceso=1 order by d.id_sede, c.nom_ciud, i.nom_dire")
                 row = cursor.fetchall()
                 for i in row:
                     lista.append({'id_sede':i[0], 'nom_sede': i[1], 'id_ciud':i[2], 'nom_ciud':i[3], 'id_dire':i[4], 'nom_dire':i[5], 'longitud':i[6], 'latitud':i[7]} )
