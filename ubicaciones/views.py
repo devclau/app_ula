@@ -21,6 +21,7 @@ class ListaUbicaciones(View):
         lista_funcion=[]
         lista_usabilidad=[]
         lista_usuario=[]
+        lista_ciudad=[]
         # Seleccionar registros de las tablas 'depend', 'edifica' y 'sede' y combinarlos según la cláusula WHERE y ORDER BY
     
         with connection.cursor() as cursor:
@@ -54,7 +55,8 @@ class ListaUbicaciones(View):
             usuario = cursor.fetchall()
             for i in usuario:
                 lista_usuario.append({'id_sede':i[0], 'nom_sede': i[1], 'id_usua':i[2], 'nom_usua':i[3]} )
-            
+
+
 
             resultado=[lista_edificacion, lista_direccion,lista_espacio, lista_funcion, lista_usabilidad, lista_usuario]
             return JsonResponse(resultado, safe=False)
@@ -73,13 +75,13 @@ class ListaUbicaciones(View):
                 for i in row:
                     lista.append({'id_espc':i[0], 'nom_esp': i[1], 'nivel':i[2], 'longitud':i[3], 'latitud':i[4]} )
             
-            elif "id_dire" in jd:
-                id_ciud =jd["id_ciud"]
-                id_dire = jd['id_dire']
-                cursor.execute(f"select d.id_sede, s.nom_sede, c.id_ciud, c.nom_ciud, i.id_dire, i.nom_dire, d.longitud, d.latitud from ubicaciones_dependencia d, view_sede s, view_ciudad c, view_direccion i where d.id_sede=s.id_sede and d.id_ciud={id_ciud} and d.id_dire={id_dire} and d.id_acceso=1 order by d.id_sede, c.nom_ciud, i.nom_dire")
+            elif "id_ciud" in jd:
+                id_sede =jd["id_sede"]
+                id_ciud = jd['id_ciud']
+                cursor.execute(f"select d.id_sede, s.nom_sede, c.id_ciud, c.nom_ciud, i.id_dire, i.nom_dire, d.longitud, d.latitud from ubicaciones_dependencia d, view_sede s, view_ciudad c, view_direccion i where d.id_sede= {id_sede} and d.id_ciud={id_ciud} and d.id_dire=i.id_dire and d.id_acceso=1 order by d.id_sede, c.nom_ciud, i.nom_dire")
                 row = cursor.fetchall()
                 for i in row:
-                    lista.append({'id_sede':i[0], 'nom_sede': i[1], 'id_ciud':i[2], 'nom_ciud':i[3], 'id_dire':i[4], 'nom_dire':i[5], 'longitud':i[4], 'latitud':i[6]} )
+                    lista.append({'id_sede':i[0], 'nom_sede': i[1], 'id_ciud':i[2], 'nom_ciud':i[3], 'id_dire':i[4], 'nom_dire':i[5], 'longitud':i[6], 'latitud':i[7]} )
                     
             elif "id_edif" in jd:
                 id_sede = jd['id_sede']
@@ -111,6 +113,8 @@ class ListaUbicaciones(View):
                 cursor.execute(f"select d.id_sede, s.nom_sede, e.nom_espc, e.id_nivel, d.longitud, d.latitud from ubicaciones_espacio e, ubicaciones_dependencia d, view_usuario u, view_sede s where e.id_dep=d.id_dep and e.id_usua=u.id_usua and d.id_sede=s.id_sede and u.id_usua={id_usua} and d.id_sede={id_sede} order by d.id_sede, e.nom_espc")
                 row = cursor.fetchall()
                 for i in row:
-                    lista.append({'id_sede':i[0], 'nom_sede': i[1], 'nom_espc':i[2], 'id_nivel':i[3], 'longitud':i[4],'latitud':i[5] } )             
+                    lista.append({'id_sede':i[0], 'nom_sede': i[1], 'nom_espc':i[2], 'id_nivel':i[3], 'longitud':i[4],'latitud':i[5] } )
+
+                      
         
         return JsonResponse(lista, safe=False)
