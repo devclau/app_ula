@@ -8,7 +8,8 @@ class ListaNotificacion(View):
     def get(self, request, *args, **kwargs):
         mes_actual = datetime.now().month
         p=[]
-        notificacion = Notificacion.objects.filter(date__month=mes_actual).order_by('-date')
+        notificacion = Notificacion.objects.all().order_by('-date')[:15]
+        #notificacion = Notificacion.objects.filter(date__month=mes_actual).order_by('-date')
         for i in notificacion:
             p.append({'date':i.date, 'time': i.time, 'link':i.link, 'title':i.title, 'detail':i.detail} )
         return JsonResponse(p, safe=False)
