@@ -16,9 +16,10 @@ class ListaNotificacion(View):
     
 class ListaNotificacionDia(View):
     def get(self, request, *args, **kwargs):
-        dia_actual = datetime.now().day
+        dia_actual = datetime.now()
         
-        notificacion = Notificacion.objects.filter(date__day=dia_actual).count()
+        notificacion = Notificacion.objects.filter(date=dia_actual).count()
+        print(notificacion)
         if notificacion > 0:
             p = {'estado':True}
         else:
